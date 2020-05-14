@@ -11,10 +11,10 @@ author:
   othernames: Reports
   address: XXX
   qualifications: XXX
-- familyname: XXX
-  othernames: XXX
-  address: XXX
-  email: XXX
+- familyname: Editya
+  othernames: Dea Avega
+  address: Clayton
+  email: dedi0003@student.monash.edu
   correspondingauthor: true
   qualifications:  XXX
 department: Our consultancy \newline add names &\newline add names
@@ -52,7 +52,27 @@ library(bookdown)
 
 \section*{Country XX2 and YY2}
 
-\section*{Country XX3 and YY3}
+\section*{Indonesia and Singapore}
+```{r}
+world_covid <- read_csv("Data/worldwidecases.csv")
+```
+
+```{r indo-sgp-deaths, fig.cap="Death Tolls in Indonesia and Singapore"}
+indo_sgp_cov <- world_covid %>% 
+  filter(countriesAndTerritories %in% c("Indonesia", "Singapore"))
+
+indo_sgp_cov
+
+indo_sgp_cov_case <- as.data.frame(indo_sgp_cov) %>% 
+  select(dateRep, cases, deaths, countriesAndTerritories)
+  
+ggplot(indo_sgp_cov_case, aes(x = dateRep, y = deaths)) +
+  geom_col(aes(fill = countriesAndTerritories))+
+  theme_minimal()
+
+```
+It can be seen from table \@ref{fig:indo-sgp-deaths}, we can see that Indonesia has more deaths than its neighbour-Singapore.
+According to @Manual, we can forecast the number of death. 
 
 
 
