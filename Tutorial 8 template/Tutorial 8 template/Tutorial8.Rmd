@@ -50,6 +50,39 @@ library(bookdown)
 
 \section*{Country XX1 and YY1"}
 
+```{r data-read-in}
+dat <- read_csv("Data/worldwidecases.csv")
+
+dat_swe_nzl <- dat %>%
+  filter(countryterritoryCode %in% c("NZL","SWE"))
+```
+
+
+```{r swe-table, fig.cap="Coronavirus Deaths by Month in Sweden}
+swe_table <- dat_swe_nzl %>%
+  filter(countryterritoryCode == "SWE") %>%
+  group_by(month) %>%
+  count() %>%
+  kable()
+```
+
+The above data in Table \@ref(tab:swe-table)) shows monthly death counts in Sweden
+
+```{r nz-bar, fig.cap="Coronavirus Deaths by Month in New Zealand"}
+nz_graph <- dat_swe_nzl %>%
+  filter(countryterritoryCode == "SWE") %>%
+  group_by(month) %>%
+  count()
+
+nz_graph %>%
+  ggplot(aes(x=month)) +
+  geom_bar()
+```
+
+The above Figure \@ref(fig:nz-bar) displays coronavirus deaths by Month in New Zealand/
+
+Junk paper reference @BC64
+
 \section*{Country XX2 and YY2}
 
 \section*{Country XX3 and YY3}
