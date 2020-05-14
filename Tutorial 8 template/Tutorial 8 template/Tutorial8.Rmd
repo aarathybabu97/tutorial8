@@ -7,8 +7,8 @@ author:
   email: mbha0014@student.monash.edu
   correspondingauthor: true
   qualifications:  XXX
-- familyname: XXXX
-  othernames: Reports
+- familyname: Babu
+  othernames: Aarathy
   address: XXX
   qualifications: XXX
 - familyname: XXX
@@ -84,6 +84,50 @@ The above Figure \@ref(fig:nz-bar) displays coronavirus deaths by Month in New Z
 Junk paper reference @BC64
 
 \section*{Country XX2 and YY2}
+
+The section focuses on comparison of cases in India and China over the months in 2020.
+
+
+```{r read,echo = FALSE, cache=TRUE, messages=TRUE, warning=FALSE}
+dat <- read_csv("Data/worldwidecases.csv")
+
+```
+
+The total number of cases from the inception of coronavirus in both countries is shown in the Table \@ref(tab:table))
+
+```{r table,echo = FALSE, cache=TRUE, messages=TRUE, warning=FALSE}
+modified<- dat %>% rename(country = countriesAndTerritories,
+               countrycode=countryterritoryCode) 
+
+
+cases <-  modified %>%  
+  filter(country %in% c("India","China")) 
+
+
+tot_cases<- cases%>% 
+
+  group_by(country,year) %>% 
+  summarise(n=sum(cases)) %>% kable(booktab=T,
+              longtable = T,
+              caption = "Total cases") %>%
+         
+  kable_styling(latex_options = "striped")
+  
+  tot_cases
+  
+```
+The visual comparison of the cases in both countries over the months of year 2020 is shown below in Figure \@ref(fig:plot))
+
+```{r plot ,echo = FALSE, cache=TRUE, messages=TRUE, warning=FALSE,fig.cap= "Cases in India has soared while Cases in China has decreased over time"}
+newset<- cases %>% select(day,month,year,cases,deaths,country) %>% filter(year=="2020")
+newset
+
+  newset %>% 
+    ggplot(aes(x=month,y=cases,color=country)) +
+    geom_smooth(se=FALSE)+
+    ggtitle("Comparison of Cases in India and China over time")
+
+```
 
 \section*{Country XX3 and YY3}
 
